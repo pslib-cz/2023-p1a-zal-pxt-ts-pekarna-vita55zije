@@ -1,29 +1,25 @@
-/*
-    cas: je doba v sekundách, po kterou trouba
-    odebírala uvedený příkon
-    spotreba: je kolik energie by bylo spotřebováno,
-    pokud by takto trouba pekla celou hodinu
-    (jsou to watthodiny [Wh])
-
-    pro cas: 600s a spotreba: 3500 Wh je skutečné
-    odebrané množství "energie":
-    3500 * (600 / 3600) === 3500 * (1/6) === 583,333W
-*/
 type Odber = {
-    cas: number, //čas je v sekundách
-    spotreba: number //spotřeba ve watech za hodinu
+    cas: number;//v sekundách
+    prikon: number;//ve wattech
 }
-const cena: number = 6.70; // Kč / kWh
 let data: Array<Odber> = [
-    { cas: 600, spotreba: 3500 },
-    { cas: 120, spotreba: 0 },
-    { cas: 300, spotreba: 1700 }, // data[2].cas
-    { cas: 60, spotreba: 0 },
-    { cas: 800, spotreba: 1500 },
-]
-
-for (const peceme of data){
-    console.logValue("čas: ", peceme.cas);
-    console.logValue("spotřeba: ", peceme.spotreba);
-    console.logValue("spotřebováno: ", peceme.spotreba / 3600 * peceme.cas);
+    { cas: 10, prikon: 3500 },
+    { cas: 30, prikon: 3600 },
+    { cas: 50, prikon: 3900 },
+    { cas: 20, prikon: 3700 },
+    { cas: 14, prikon: 3650 },
+    { cas: 19, prikon: 3770 },
+];
+const cena = 6.70//Kč / kWh
+let spotreba: number = 0;
+let prumer: number = 0;
+let totaltime: number = 0;
+for (let i of data) {
+    spotreba += (i.cas / 3600) * (i.prikon / 1000);
+    totaltime += i.cas;
 }
+
+console.log("Pečení stálo:");
+console.log(spotreba * cena + ' czk');
+console.log("Průměrný odběr el. energie:")
+console.log(spotreba / totaltime * 3600 + ' kW');
